@@ -135,7 +135,7 @@ $(document).ready(function () {
 </div>
 <div id="the-weight-lifting-excercise-dataset" class="section level2">
 <h2>The Weight Lifting Excercise Dataset</h2>
-<p>The raw data can be efficiently downloaded from the internet using R’s <em>sqldf</em> package. The raw dataset contains 19622 observations across 160 variables.</p>
+<p>The raw data can be efficiently downloaded from the internet using R’s <em>sqldf</em> package. The raw dataset contains 19,622 observations across 160 variables.</p>
 <pre class="r"><code>link = &quot;https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv&quot;
 raw.dat = read.csv.sql(link, sql = &quot;select * from file&quot;) </code></pre>
 <pre><code>## Warning: closing unused connection 5 (/var/folders/9_/
@@ -164,8 +164,8 @@ dim(training)</code></pre>
 <pre class="r"><code>dim(testing)</code></pre>
 <pre><code>## [1] 5885   54</code></pre>
 </div>
-<div id="explatory-analysis-of-activity-separation-by-features" class="section level3">
-<h3>Explatory analysis of activity separation by features</h3>
+<div id="explatory-analysis-of-activity-features" class="section level3">
+<h3>Explatory analysis of activity features</h3>
 <p>The different activities produce distinct data across the sensors. For instance, Figure 2 shows how the belt information looks different across the five activities for two participants, Carlitos and Pedro.</p>
 <pre class="r"><code>library(sm)
 par(mfrow = c(1, 2))
@@ -186,7 +186,7 @@ Figure 2. Roll Belt Data
 </div>
 <div id="reduce-dimensionality-via-pca" class="section level3">
 <h3>Reduce Dimensionality via PCA</h3>
-<p>A Principal Components Analysis (PCA) is run with the training data to reduce the number of features to train the learner algorithm. A PCA decomposes the variance of the original matrix in decreasing order so that the most variance is contained in the first few components. The <em>pca</em> algorithm included in the <em>caret</em> package selects keeps only 18 components to capture 90% of the variance of the original 52 numeric variables. To further reduce the number of feature is to get rid of near zero variance features. However, there is no near zero variance features in the PCA matrix.</p>
+<p>A Principal Components Analysis (PCA) is ran on the training set to reduce the number of features for the learner algorithm. A PCA decomposes the variance of the original matrix in decreasing order so that the most variance is included within the first few components. Using the <em>pca</em> algorithm in the <em>caret</em> package, only 18 components are kept to capture 90% of the variance from the original 52 numeric variables. To see if a further reduction in the number of feature is possible, the features’ variance is explored. However, there are no features with near zero variance within the PCA matrix.</p>
 <pre class="r"><code>(pc = preProcess(training, method = &quot;pca&quot;, thresh = .9))</code></pre>
 <pre><code>## Created from 13737 samples and 54 variables
 ## 
@@ -215,7 +215,7 @@ Figure 3. PCA differentiates users
 </div>
 <div id="model-training" class="section level2">
 <h2>Model Training</h2>
-<p>A Random Forest (RF) algorithm is selected to train the learner using the parallel implementation in the <em>ParallelForest</em> package in R. To optimize the parameters, a 10-fold cross-validation method is used.</p>
+<p>A Random Forest (RF) model is selected to train the learner algorithm using a parallel implementation included in the <em>ParallelForest</em> package. To optimize the parameters of the learner algorithm, a 10-fold cross-validation approach is used.</p>
 <pre class="r"><code>library(doParallel)</code></pre>
 <pre><code>## Warning: package 'doParallel' was built under R version 3.4.2</code></pre>
 <pre><code>## Loading required package: iterators</code></pre>
