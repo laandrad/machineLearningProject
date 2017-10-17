@@ -1,7 +1,6 @@
-setwd("~/Dropbox (Personal)/Coursera Data Science/Practical Machine Learning")
-
 load("ml_project.RData")
 
+library(sm)
 # exploratory analysis
 par(mfrow = c(1, 3))
 training$roll_belt %>% sm.density.compare(training$activity)
@@ -14,7 +13,8 @@ training[which(training$user == "pedro"), "roll_belt"] %>%
 title(main = "Pedro's roll_belt")
 
 library(ggplot2)
-g = ggplot(data = trainPC[, 1:3], aes(x = PC1, y = PC2, colour = activity))
+g = ggplot(data = trainPC[, 2:4], aes(x = PC1, y = PC2, colour = activity))
 g + geom_point(alpha = .2)
 
-heatmap(CM)
+CM$table
+CM$overall[1:2]
